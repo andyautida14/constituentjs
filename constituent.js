@@ -41,7 +41,7 @@
       enumarable: true,
       writable: false,
       configurable: false,
-      value: '0.1.0'
+      value: '0.0.0'
     });
 
     Object.defineProperty(constituent, "Class", {
@@ -75,7 +75,7 @@
 
           props[key] = descriptor;
         }
-        
+
         Object.defineProperties(target, props);
       }
 
