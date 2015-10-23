@@ -9,6 +9,10 @@
   },
   "author": "Andy Autida",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andyautida14/constituentjs.git"
+  },
   "devDependencies": {
     "should": "~7.1.1",
     "mocha": "~2.3.3",
