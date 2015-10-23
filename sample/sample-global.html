@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>try</title>
+    <script src="../constituent.js"></script>
+  </head>
+  <body>
+    <p id="whitie"></p>
+    <p id="blackie"></p>
+
+    <script>
+var Class = constituent.Class;
+var Dog = Class(function(name) {
+  this.name = name;
+}, {
+  bark: function() {
+    document.getElementById(this.name).innerHTML = this.name + ": woof!";
+  }
+});
+
+var whitie = new Dog("whitie");
+var blackie = new Dog("blackie");
+
+blackie.bark();
+whitie.bark();
+    </script>
+  </body>
+</html>

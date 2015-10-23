@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>try</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
+    <script>
+    require(["./sample-require-config"], function() {
+      require(["constituent"], function(constituent) {
+        var Class = constituent.Class;
+
+        var Dog = Class(function(name) {
+          this.name = name;
+        }, {
+          bark: function() {
+            document.getElementById(this.name).innerHTML = this.name + ": woof!";
+          }
+        });
+
+        var dolly = new Dog("dolly");
+        var tuttie = new Dog("tuttie");
+
+        tuttie.bark();
+        dolly.bark();
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <p id="dolly"></p>
+    <p id="tuttie"></p>
+  </body>
+</html>
