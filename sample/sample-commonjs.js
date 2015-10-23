@@ -38,4 +38,4 @@ console.log(Labrador);
 var tuttie = new Labrador("tuttie");
 tuttie.bark();
 tuttie.dogsName = "dolly";
-console.log(tuttie.dogsName);
+console.log(tuttie.dogsName, tuttie.name);
