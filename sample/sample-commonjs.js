@@ -17,8 +17,8 @@ var Dog = constituent.Class(function (name) {
 
 var Labrador = constituent.Class(function() {
   console.log("in Labrador constructor");
-  Labrador.super.apply(this, arguments);
-  Labrador.super.printVersion();
+  Labrador.parent.apply(this, arguments);
+  Labrador.parent.printVersion();
 }, {
   bark: function() {
     console.log("in Labrador.bark");
@@ -34,8 +34,23 @@ var Labrador = constituent.Class(function() {
   }
 }).extends(Dog);
 
+var Corgi = constituent.Class(function() {
+  console.log("in Corgi constructor");
+  Corgi.parent.apply(this, arguments);
+}).extends(Dog)
+.method("bark", function() {
+  console.log("in Corgi.bark");
+  this.super.bark.apply(this, arguments);
+})
+.staticMethod("jump", function() {
+  console.log("in Corgi::jump");
+});
+
 console.log(Labrador);
 var tuttie = new Labrador("tuttie");
 tuttie.bark();
 tuttie.dogsName = "dolly";
-console.log(tuttie.dogsName, tuttie.name);
+
+var doge = new Corgi("Doge");
+doge.bark();
+Corgi.jump();

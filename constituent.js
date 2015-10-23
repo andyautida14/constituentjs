@@ -17,12 +17,12 @@
 
   constituentProps.version = {
     enumarable: true,
-    value: '0.0.1'
+    value: '0.1.0'
   };
 
   constituentProps.extends = {
     value: function(subClass, superClass) {
-      if (Object.hasOwnProperty(subClass, "super")) {
+      if ("parent" in subClass) {
         throw new Error("Does not support multiple inheritance");
       }
 
@@ -32,46 +32,87 @@
         value: superClass.prototype
       });
 
-      Object.defineProperty(subClass, "super", {
+      Object.defineProperty(subClass, "parent", {
         value: superClass,
         enumerable: true
       });
     }
   };
 
+  constituentProps.extend = {
+    value: function (target, args) {
+      if(args.length !== 2) {
+        throw new Error("method() requires 2 arguments, " + arguments.length + " given");
+      }
+
+      if(typeof args[0] === 'string' && typeof args[1] === 'function') {
+        Object.defineProperty(target, args[0], {value: args[1]});
+      }
+      else if(typeof args[0] === 'string' && typeof args[1] === 'object') {
+        if (!(typeof args[1].value === 'function'
+        || typeof args[1].get === 'function'
+        || typeof args[2].set === 'function')) {
+          throw new Error("method() object argument's value, get or set property must always be a function");
+        }
+        Object.defineProperty(target, args[0], args[1]);
+      }
+      else {
+        throw new Exception("invalid argument for method()");
+      }
+    }
+  }
+
   constituentProps.Class = {
     value: (function () {
-      function defineProperties(target, props) {
-        var privates = Object.create(target);
+      var statics = {
+        extends: function(superClass) {
+          constituent.extends(this, superClass);
+          return this;
+        },
+        method: function() {
+          constituent.extend(this.prototype, arguments);
+          return this;
+        },
+        staticMethod: function() {
+          constituent.extend(this, arguments);
+          return this;
+        }
+      };
 
-        for (var key in props) {
-          var prop = props[key];
+      function extend(obj, src) {
+        Object.keys(src).forEach(function(key) { obj[key] = src[key]; });
+        return obj;
+      }
 
-          if (typeof prop === 'function') {
-            props[key] = {
-              value: prop
+      function getStatics(staticProps) {
+        var props = {};
+
+        Object.keys(statics).forEach(function(key) {
+          if(staticProps) {
+            if(key in staticProps) {
+              throw new Error("'" + key + "' is a reserved keyword");
             }
           }
-        }
+          props[key] = statics[key];
+        })
+
+        return (staticProps) ? extend(props, staticProps) : props;
+      }
+
+      function defineProperties(target, props) {
+        Object.keys(props).forEach(function(key) {
+          var prop = props[key];
+
+          if(typeof prop === 'function') {
+            props[key] = { value: prop };
+          }
+        });
 
         Object.defineProperties(target, props);
       }
 
       return function (Constructor, protoProps, staticProps) {
-        var statics = {
-          extends: function(superClass) {
-            constituent.extends(this, superClass);
-            return this;
-          }
-        };
-
-        if(staticProps) {
-          for(var key in staticProps) {
-            statics[key] = staticProps[key];
-          }
-        }
-
-        defineProperties(Constructor, statics);
+        defineProperties(Constructor, getStatics(staticProps));
         if (protoProps) defineProperties(Constructor.prototype, protoProps);
 
         return Constructor;
