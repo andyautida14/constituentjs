@@ -76,3 +76,13 @@ Class(Labrador)
   this.super.bark.call(this, "labrador"); // invoking Dog.bark using 'this' as context
 });
 ```
+
+### instantiation and method invocation
+```javascript
+var tuttie = new Labrador("tuttie");
+tuttie.bark();
+Dog.wagTail(); // <-- static method invocation
+```
+
+## Licence
+[The MIT License](LICENSE)
