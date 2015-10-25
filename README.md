@@ -6,17 +6,17 @@ A small and simple class library for Javascript.
 ### Importing
 
 *in CommonJS:*
-'''javascript
+```javascript
 var constituent = require('/path/to/constituent');
 
 // or
 var constituent = require('constituent');
-'''
+```
 
 see [sample-commonjs.js](sample/sample-commonjs.js).
 
 *in RequireJS:*
-'''javascript
+```javascript
 require.config({
   paths: {
     constituent: '/path/to/constituent'
@@ -25,12 +25,12 @@ require.config({
 require(['constituent'], function (constituent) {
   // your code here
 });
-'''
+```
 
 see [sample-require.html](sample/sample-require.html) and [sample-require-config.js](sample/sample-require-config.js).
 
 *in browser's global namespace:*
-'''html
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -43,6 +43,6 @@ see [sample-require.html](sample/sample-require.html) and [sample-require-config
     <!-- Whatever here -->
   <body>
 </html>
-'''
+```
 
 see [sample-global.html](sample/sample-global.html).
