@@ -1,7 +1,9 @@
 var constituent = require('../constituent');
 
+// create a Class
 var Dog = constituent.Class(function (name) {
   // constructor
+  console.log("in Dog constructor");
   this.name = name;
 }, {
   // proto properties
@@ -18,7 +20,6 @@ var Dog = constituent.Class(function (name) {
 var Labrador = constituent.Class(function() {
   console.log("in Labrador constructor");
   Labrador.parent.apply(this, arguments);
-  Labrador.parent.printVersion();
 }, {
   bark: function() {
     console.log("in Labrador.bark");
@@ -32,7 +33,7 @@ var Labrador = constituent.Class(function() {
       this.name = newName;
     }
   }
-}).extends(Dog);
+}).extends(Dog); // <-- inherits from Dog
 
 var Corgi = constituent.Class(function() {
   console.log("in Corgi constructor");
@@ -46,11 +47,32 @@ var Corgi = constituent.Class(function() {
   console.log("in Corgi::jump");
 });
 
-console.log(Labrador);
+// instantiation
 var tuttie = new Labrador("tuttie");
-tuttie.bark();
-tuttie.dogsName = "dolly";
-
 var doge = new Corgi("Doge");
+
+// method invocations
+tuttie.bark();
 doge.bark();
+
+// using accessors
+tuttie.dogsName = "tuttie 2";
+console.log(tuttie.dogsName);
+
+// static methods
+Dog.printVersion();
 Corgi.jump();
+
+// static methods shall not be heritable
+try {
+  Corgi.printVersion();
+} catch (err) {
+  console.log(err.message, "--> static methods are not inheritable");
+}
+
+// does not support multiple inheritance
+try {
+  var Chihuahua = constituent.Class(function() {}).extends(Dog).extends(Dog);
+} catch (err) {
+  console.log(err.message);
+}

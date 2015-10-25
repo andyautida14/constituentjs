@@ -17,7 +17,7 @@
 
   constituentProps.version = {
     enumarable: true,
-    value: '0.1.0'
+    value: '0.1.1'
   };
 
   constituentProps.extends = {
@@ -26,7 +26,7 @@
         throw new Error("Does not support multiple inheritance");
       }
 
-      Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+      Object.setPrototypeOf ? Object.setPrototypeOf(subClass.prototype, superClass.prototype) : subClass.prototype.__proto__ = superClass.prototype;
 
       Object.defineProperty(subClass.prototype, "super", {
         value: superClass.prototype
