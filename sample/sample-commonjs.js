@@ -7,8 +7,8 @@ var Dog = constituent.Class(function (name) {
   this.name = name;
 }, {
   // proto properties
-  bark: function() {
-    console.log(this.name + ": woof!");
+  bark: function(breed) {
+    console.log(this.name + "(" + breed + "): woof!");
   }
 }, {
   // static properties
@@ -22,8 +22,7 @@ var Labrador = constituent.Class(function() {
   Labrador.parent.apply(this, arguments);
 }, {
   bark: function() {
-    console.log("in Labrador.bark");
-    this.super.bark.apply(this, arguments);
+    this.super.bark.call(this, "labrador");
   },
   dogsName: {
     get: function () {
@@ -40,8 +39,7 @@ var Corgi = constituent.Class(function() {
   Corgi.parent.apply(this, arguments);
 }).extends(Dog)
 .method("bark", function() {
-  console.log("in Corgi.bark");
-  this.super.bark.apply(this, arguments);
+  this.super.bark.call(this, "corgi");
 })
 .staticMethod("jump", function() {
   console.log("in Corgi::jump");
