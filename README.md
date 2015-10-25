@@ -37,11 +37,11 @@ see [sample-require.html](sample/sample-require.html) and [sample-require-config
     <script src="path/to/constituent.js"></script>
     <script>
     // now accessible via 'constituent' variable
-    <script>
+    </script>
   </head>
   <body>
     <!-- Whatever here -->
-  <body>
+  </body>
 </html>
 ```
 
@@ -77,7 +77,7 @@ Class(Labrador)
 });
 ```
 
-### instantiation and method invocation
+### Instantiation and method invocation
 ```javascript
 var tuttie = new Labrador("tuttie");
 tuttie.bark();
