@@ -46,3 +46,33 @@ see [sample-require.html](sample/sample-require.html) and [sample-require-config
 ```
 
 see [sample-global.html](sample/sample-global.html).
+
+### Class definition
+```javascript
+var Class = constituent.Class;
+
+function Dog (name) {
+  this.name = name;
+}
+
+Class(Dog)
+.method("bark", function (breed) { // <-- method definition
+  console.log(this.name + " (" + breed + "): woof!")
+})
+.staticMethod("wagTail", function () { // <-- static method definition
+  console.log("Not much. Just wagging the tail.");
+});
+```
+
+### Inheritance
+```javascript
+function Labrador () {
+  Labrador.parent.apply(this, arguments);
+}
+
+Class(Labrador)
+.extends(Dog) // <-- inherits from Dog
+.method("bark", function () { // <-- overriding Dog.bark
+  this.super.bark.call(this, "labrador"); // invoking Dog.bark using 'this' as context
+});
+```
